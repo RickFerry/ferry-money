@@ -31,7 +31,8 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
         return handleExceptionInternal(ex, List.of(new Erro(messageSource.getMessage(ex.getMessage(), null,
-                LocaleContextHolder.getLocale()), ex.getCause().toString())), headers, HttpStatus.BAD_REQUEST, request);
+                LocaleContextHolder.getLocale()), ex.getCause() != null ? ex.getCause().toString() : ex.toString())),
+                headers, HttpStatus.BAD_REQUEST, request);
     }
 
     @Override

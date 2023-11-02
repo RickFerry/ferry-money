@@ -38,6 +38,20 @@ public class PessoaResource {
         return ResponseEntity.created(uri.path("/pessoas/{id}").buildAndExpand(dto.getId()).toUri()).body(dto);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PessoaDto> update(@PathVariable Long id, @RequestBody @Valid PessoaDto pessoaDto) {
+        try {
+            return ResponseEntity.ok(pessoaService.update(id, pessoaDto));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}/ativo")
+    public ResponseEntity<PessoaDto> updateAtivo(@PathVariable Long id, @RequestBody Boolean ativo) {
+        return ResponseEntity.ok(pessoaService.updateAtivo(id, ativo));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
