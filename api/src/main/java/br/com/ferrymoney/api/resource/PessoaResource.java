@@ -23,9 +23,28 @@ public class PessoaResource {
         return ResponseEntity.ok(pessoaService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PessoaDto> findById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(pessoaService.findById(id));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<PessoaDto> create(@RequestBody @Valid PessoaDto pessoaDto, UriComponentsBuilder uri) {
         PessoaDto dto = pessoaService.create(pessoaDto);
-        return ResponseEntity.created(uri.path("/{id}").buildAndExpand(dto.getId()).toUri()).body(dto);
+        return ResponseEntity.created(uri.path("/pessoas/{id}").buildAndExpand(dto.getId()).toUri()).body(dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            pessoaService.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

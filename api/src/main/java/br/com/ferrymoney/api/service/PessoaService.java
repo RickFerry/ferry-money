@@ -24,8 +24,26 @@ public class PessoaService {
         return toDto(pessoaRepository.findAll());
     }
 
+    @Transactional(readOnly = true)
+    public PessoaDto findById(Long id) {
+        if (pessoaRepository.findOne(id) != null) {
+            return toDto(pessoaRepository.findOne(id));
+        } else {
+            throw new RuntimeException("Not found!");
+        }
+    }
+
     @Transactional
     public PessoaDto create(PessoaDto pessoaDto) {
         return toDto(pessoaRepository.save(toEntity(pessoaDto)));
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        if (pessoaRepository.findOne(id) != null) {
+            pessoaRepository.delete(pessoaRepository.findOne(id));
+        } else {
+            throw new RuntimeException("Not found!");
+        }
     }
 }
