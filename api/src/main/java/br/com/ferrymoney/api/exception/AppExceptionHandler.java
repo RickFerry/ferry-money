@@ -53,6 +53,13 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler({ PessoaInexistenteOuInativaException.class })
+    public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex, WebRequest request) {
+        List<Erro> erros = List.of(new Erro(messageSource.getMessage("pessoa.inexistente-ou-inativa", null,
+                LocaleContextHolder.getLocale()), getRootCauseMessage(ex)));
+        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
     @ExceptionHandler({ DataIntegrityViolationException.class })
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
         List<Erro> erros = List.of(new Erro(messageSource.getMessage("recurso.operacao-nao-permitida", null,
