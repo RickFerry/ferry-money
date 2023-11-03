@@ -32,9 +32,9 @@ public class CategoriaService {
     }
 
     @Transactional(readOnly = true)
-    public Categoria findById(Long codigo) {
+    public CategoriaDto findById(Long codigo) {
         if (categoriaRepository.findOne(codigo) != null)
-            return categoriaRepository.findOne(codigo);
+            return CategoriaDto.toDto(categoriaRepository.findOne(codigo));
         throw new RuntimeException("Code: " + codigo + " not found!");
     }
 }

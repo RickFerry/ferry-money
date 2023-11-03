@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoriaDto {
-    Long codigo;
+    Long id;
 
     @NotNull
     @Size(min = 3, max = 50)
@@ -20,7 +20,7 @@ public class CategoriaDto {
 
     public static CategoriaDto toDto(Categoria categoria) {
         return CategoriaDto.builder()
-                .codigo(categoria.getCodigo())
+                .id(categoria.getId())
                 .nome(categoria.getNome())
                 .build();
     }

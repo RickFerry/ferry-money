@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long codigo;
+    Long id;
 
     @NotNull
     @Column(unique = true)
@@ -23,7 +23,7 @@ public class Categoria {
 
     public static Categoria toEntity(CategoriaDto dto) {
         return Categoria.builder()
-                .codigo(dto.getCodigo())
+                .id(dto.getId())
                 .nome(dto.getNome())
                 .build();
     }

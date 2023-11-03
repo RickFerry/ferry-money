@@ -25,10 +25,10 @@ public class CategoriaResource {
         return ResponseEntity.ok(categoriaService.findAll());
     }
 
-    @GetMapping("/{codigo}")
-    public ResponseEntity<Categoria> findById(@PathVariable Long codigo) {
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoriaDto> findById(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(categoriaService.findById(codigo));
+            return ResponseEntity.ok(categoriaService.findById(id));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -40,7 +40,7 @@ public class CategoriaResource {
         try {
             CategoriaDto resp = categoriaService.create(dto);
             return ResponseEntity
-                    .created(uriComponentsBuilder.path("/{codigo}").buildAndExpand(resp.getCodigo())
+                    .created(uriComponentsBuilder.path("/{codigo}").buildAndExpand(resp.getId())
                             .toUri()).body(resp);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
