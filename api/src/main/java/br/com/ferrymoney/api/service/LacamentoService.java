@@ -1,11 +1,14 @@
 package br.com.ferrymoney.api.service;
 
 import br.com.ferrymoney.api.exception.PessoaInexistenteOuInativaException;
+import br.com.ferrymoney.api.model.Lancamento;
 import br.com.ferrymoney.api.model.Pessoa;
 import br.com.ferrymoney.api.model.dto.LancamentoDto;
 import br.com.ferrymoney.api.repository.LancamentoRepository;
 import br.com.ferrymoney.api.repository.PessoaRepository;
 import br.com.ferrymoney.api.repository.filter.LancamentoFilter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +29,8 @@ public class LacamentoService {
     }
 
     @Transactional(readOnly = true)
-    public List<LancamentoDto> pesquisar(LancamentoFilter filter) {
-        return toDto(lancamentoRepository.pesquisar(filter));
+    public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable page) {
+        return lancamentoRepository.pesquisar(filter, page);
     }
 
     @Transactional(readOnly = true)
