@@ -5,6 +5,7 @@ import br.com.ferrymoney.api.model.Pessoa;
 import br.com.ferrymoney.api.model.dto.LancamentoDto;
 import br.com.ferrymoney.api.repository.LancamentoRepository;
 import br.com.ferrymoney.api.repository.PessoaRepository;
+import br.com.ferrymoney.api.repository.filter.LancamentoFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +26,8 @@ public class LacamentoService {
     }
 
     @Transactional(readOnly = true)
-    public List<LancamentoDto> findAll() {
-        return toDto(lancamentoRepository.findAll());
+    public List<LancamentoDto> pesquisar(LancamentoFilter filter) {
+        return toDto(lancamentoRepository.pesquisar(filter));
     }
 
     @Transactional(readOnly = true)

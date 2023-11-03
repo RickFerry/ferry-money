@@ -1,6 +1,7 @@
 package br.com.ferrymoney.api.resource;
 
 import br.com.ferrymoney.api.model.dto.LancamentoDto;
+import br.com.ferrymoney.api.repository.filter.LancamentoFilter;
 import br.com.ferrymoney.api.service.LacamentoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class LancamentoResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<LancamentoDto>> findAll() {
-        return ResponseEntity.ok(lacamentoService.findAll());
+    public ResponseEntity<List<LancamentoDto>> pesquisar(LancamentoFilter filter) {
+        return ResponseEntity.ok(lacamentoService.pesquisar(filter));
     }
 
     @GetMapping("/{id}")
