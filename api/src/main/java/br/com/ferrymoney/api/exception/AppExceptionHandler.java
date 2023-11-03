@@ -21,6 +21,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMessage;
+
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     private final MessageSource messageSource;
@@ -47,14 +49,14 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({ EmptyResultDataAccessException.class })
     public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request) {
         List<Erro> erros = List.of(new Erro(messageSource.getMessage("recurso.nao-encontrado", null,
-                LocaleContextHolder.getLocale()), ExceptionUtils.getRootCauseMessage(ex)));
+                LocaleContextHolder.getLocale()), getRootCauseMessage(ex)));
         return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler({ DataIntegrityViolationException.class })
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
         List<Erro> erros = List.of(new Erro(messageSource.getMessage("recurso.operacao-nao-permitida", null,
-                LocaleContextHolder.getLocale()), ex.toString()));
+                LocaleContextHolder.getLocale()), getRootCauseMessage(ex)));
         return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
