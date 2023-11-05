@@ -53,6 +53,17 @@ public class LancamentoResource {
                                                 UriComponentsBuilder uri) {
         LancamentoDto lancamento = lacamentoService.create(lancamentoDto);
         return ResponseEntity.created(
-                uri.path("/lancamentos/{id}").buildAndExpand(lancamento.getId()).toUri()).body(lancamento);
+                uri.path("/lancamentos/{id}").buildAndExpand(lancamento.getId()).toUri()
+        ).body(lancamento);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') and #oauth2.hasScope('write')")
+    public ResponseEntity<Lancamento> update(@PathVariable Long id, @Valid @RequestBody Lancamento lancamento) {
+        try {
+            return ResponseEntity.ok(lacamentoService.update(id, lancamento));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

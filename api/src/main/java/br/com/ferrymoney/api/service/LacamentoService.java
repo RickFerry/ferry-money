@@ -8,15 +8,15 @@ import br.com.ferrymoney.api.model.dto.ResumoLancamentoDto;
 import br.com.ferrymoney.api.repository.LancamentoRepository;
 import br.com.ferrymoney.api.repository.PessoaRepository;
 import br.com.ferrymoney.api.repository.filter.LancamentoFilter;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 import static br.com.ferrymoney.api.model.Lancamento.toEntity;
 import static br.com.ferrymoney.api.model.dto.LancamentoDto.toDto;
+import static org.springframework.beans.BeanUtils.copyProperties;
 
 @Service
 public class LacamentoService {
@@ -42,9 +42,9 @@ public class LacamentoService {
     @Transactional(readOnly = true)
     public LancamentoDto findById(Long id) {
         if (lancamentoRepository.findOne(id) == null) {
-            return toDto(lancamentoRepository.findOne(id));
+            throw new RuntimeException("Not found!");
         }
-        throw new RuntimeException("Not found!");
+        return toDto(lancamentoRepository.findOne(id));
     }
 
     @Transactional
@@ -56,5 +56,28 @@ public class LacamentoService {
         return toDto(
                 lancamentoRepository.save(toEntity(lancamentoDto))
         );
+    }
+
+    @Transactional
+    public Lancamento update(Long id, Lancamento lancamento) {
+        Lancamento lanc = lancamentoRepository.findOne(id);
+        if (lanc == null) {
+            throw new IllegalArgumentException("Not found!");
+        }
+        if (!lancamento.getPessoa().equals(lanc.getPessoa())) {
+            validarPessoa(lancamento);
+        }
+        copyProperties(lancamento, lanc, "id");
+        return lancamentoRepository.save(lanc);
+    }
+
+    private void validarPessoa(Lancamento lancamento) {
+        Pessoa pessoa = null;
+        if (lancamento.getPessoa().getId() != null) {
+            pessoa = pessoaRepository.findOne(lancamento.getPessoa().getId());
+        }
+        if (pessoa == null || !pessoa.getAtivo()) {
+            throw new PessoaInexistenteOuInativaException();
+        }
     }
 }
