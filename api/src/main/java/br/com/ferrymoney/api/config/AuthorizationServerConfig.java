@@ -3,6 +3,7 @@ package br.com.ferrymoney.api.config;
 import br.com.ferrymoney.api.config.token.CustomTokenEnhancer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 import static java.util.Arrays.asList;
 
 @Configuration
+@Profile("oauth-security")
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
