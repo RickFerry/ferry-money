@@ -1,6 +1,7 @@
 package br.com.ferrymoney.api.service;
 
 import br.com.ferrymoney.api.model.Usuario;
+import br.com.ferrymoney.api.model.UsuarioSistema;
 import br.com.ferrymoney.api.repository.UsuarioRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,7 +26,7 @@ public class AppUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(RuntimeException::new);
-        return new User(email, usuario.getSenha(), getPermissoes(usuario));
+        return new UsuarioSistema(usuario, getPermissoes(usuario));
     }
 
     private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
