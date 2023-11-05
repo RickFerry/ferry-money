@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("lancamentos")
@@ -31,7 +30,7 @@ public class LancamentoResource {
         return ResponseEntity.ok(lacamentoService.pesquisar(filter, page));
     }
 
-    @GetMapping(params =  "resumo")
+    @GetMapping(params = "resumo")
     @PreAuthorize("hasAuthority('ROLE_USER') and #oauth2.hasScope('read')")
     public ResponseEntity<Page<ResumoLancamentoDto>> resumir(LancamentoFilter filter, Pageable page) {
         return ResponseEntity.ok(lacamentoService.resumir(filter, page));
