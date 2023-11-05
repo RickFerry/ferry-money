@@ -1,5 +1,6 @@
 package br.com.ferrymoney.api.token;
 
+import br.com.ferrymoney.api.config.property.AppProperties;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -18,6 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @ControllerAdvice
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
+    private final AppProperties appProperties;
+
+    public RefreshTokenPostProcessor(AppProperties appProperties) {
+        this.appProperties = appProperties;
+    }
+
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
         return methodParameter.getMethod().getName().equals("postAccessToken");
@@ -45,7 +52,7 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
     private void adicionaRefreshTokenCookie(HttpServletRequest request, HttpServletResponse response, String refreshToken) {
         Cookie cookie = new Cookie("refreshToken", refreshToken);
         cookie.setHttpOnly(true);
-        cookie.setSecure(false);
+        cookie.setSecure(appProperties.getSeguranca().getEnableHttps());
         cookie.setPath(request.getContextPath() + "/oauth/token");
         cookie.setMaxAge(2592000);
         response.addCookie(cookie);
