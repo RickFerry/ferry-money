@@ -1,6 +1,7 @@
 package br.com.ferrymoney.api.repository.override;
 
 import br.com.ferrymoney.api.model.Lancamento;
+import br.com.ferrymoney.api.model.dto.ResumoLancamentoDto;
 import br.com.ferrymoney.api.repository.filter.LancamentoFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -36,6 +37,27 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
         return new PageImpl<>(query.getResultList(), page, total(filter));
     }
 
+    @Override
+    public Page<ResumoLancamentoDto> resumir(LancamentoFilter filter, Pageable page) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ResumoLancamentoDto> criteria = builder.createQuery(ResumoLancamentoDto.class);
+        Root<Lancamento> root = criteria.from(Lancamento.class);
+
+        criteria.select(builder.construct(ResumoLancamentoDto.class,
+                root.get("id"), root.get("descricao"),
+                root.get("dataVencimento"), root.get("dataPagamento"),
+                root.get("valor"), root.get("tipo"),
+                root.get("categoria").get("nome"),
+                root.get("pessoa").get("nome")));
+
+        Predicate[] predicates = criaRestricoes(filter, builder, root);
+        criteria.where(predicates);
+
+        TypedQuery<ResumoLancamentoDto> query = entityManager.createQuery(criteria);
+        adicionarRestricoesDePaginacao(query, page);
+        return new PageImpl<>(query.getResultList(), page, total(filter));
+    }
+
     private Predicate[] criaRestricoes(LancamentoFilter filter, CriteriaBuilder builder, Root<Lancamento> root) {
         List<Predicate> predicates = new ArrayList<>();
         if (isNotEmpty(filter.getDescricao())) {
@@ -56,7 +78,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
         return predicates.toArray(new Predicate[predicates.size()]);
     }
 
-    private void adicionarRestricoesDePaginacao(TypedQuery<Lancamento> query, Pageable page) {
+    private void adicionarRestricoesDePaginacao(TypedQuery<?> query, Pageable page) {
         int paginaAtual = page.getPageNumber();
         int totalRegistrosPagina = page.getPageSize();
         int primeiraRegistroPagina = paginaAtual * totalRegistrosPagina;

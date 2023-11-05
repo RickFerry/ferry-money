@@ -4,6 +4,7 @@ import br.com.ferrymoney.api.exception.PessoaInexistenteOuInativaException;
 import br.com.ferrymoney.api.model.Lancamento;
 import br.com.ferrymoney.api.model.Pessoa;
 import br.com.ferrymoney.api.model.dto.LancamentoDto;
+import br.com.ferrymoney.api.model.dto.ResumoLancamentoDto;
 import br.com.ferrymoney.api.repository.LancamentoRepository;
 import br.com.ferrymoney.api.repository.PessoaRepository;
 import br.com.ferrymoney.api.repository.filter.LancamentoFilter;
@@ -31,6 +32,11 @@ public class LacamentoService {
     @Transactional(readOnly = true)
     public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable page) {
         return lancamentoRepository.pesquisar(filter, page);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ResumoLancamentoDto> resumir(LancamentoFilter filter, Pageable page) {
+        return lancamentoRepository.resumir(filter, page);
     }
 
     @Transactional(readOnly = true)

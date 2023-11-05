@@ -2,6 +2,7 @@ package br.com.ferrymoney.api.resource;
 
 import br.com.ferrymoney.api.model.Lancamento;
 import br.com.ferrymoney.api.model.dto.LancamentoDto;
+import br.com.ferrymoney.api.model.dto.ResumoLancamentoDto;
 import br.com.ferrymoney.api.repository.filter.LancamentoFilter;
 import br.com.ferrymoney.api.service.LacamentoService;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,12 @@ public class LancamentoResource {
     @PreAuthorize("hasAuthority('ROLE_USER') and #oauth2.hasScope('read')")
     public ResponseEntity<Page<Lancamento>> pesquisar(LancamentoFilter filter, Pageable page) {
         return ResponseEntity.ok(lacamentoService.pesquisar(filter, page));
+    }
+
+    @GetMapping(params =  "resumo")
+    @PreAuthorize("hasAuthority('ROLE_USER') and #oauth2.hasScope('read')")
+    public ResponseEntity<Page<ResumoLancamentoDto>> resumir(LancamentoFilter filter, Pageable page) {
+        return ResponseEntity.ok(lacamentoService.resumir(filter, page));
     }
 
     @GetMapping("/{id}")
