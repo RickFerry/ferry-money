@@ -1,7 +1,9 @@
 package br.com.ferrymoney.api.resource;
 
+import br.com.ferrymoney.api.model.Pessoa;
 import br.com.ferrymoney.api.model.dto.PessoaDto;
 import br.com.ferrymoney.api.service.PessoaService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +23,8 @@ public class PessoaResource {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_USER') and #oauth2.hasScope('read')")
-    public ResponseEntity<List<PessoaDto>> findAll() {
-        return ResponseEntity.ok(pessoaService.findAll());
+    public ResponseEntity<Pessoa> findByNome(@RequestParam(required = false, defaultValue = "%") String nome, Pageable page) {
+        return ResponseEntity.ok().body(pessoaService.findByNome(nome, page));
     }
 
     @GetMapping("/{id}")

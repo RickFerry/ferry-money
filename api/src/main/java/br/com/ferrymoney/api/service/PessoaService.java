@@ -4,6 +4,7 @@ import br.com.ferrymoney.api.model.Pessoa;
 import br.com.ferrymoney.api.model.dto.PessoaDto;
 import br.com.ferrymoney.api.repository.PessoaRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +23,8 @@ public class PessoaService {
     }
 
     @Transactional(readOnly = true)
-    public List<PessoaDto> findAll() {
-        return toDto(pessoaRepository.findAll());
+    public Pessoa findByNome(String nome, Pageable page) {
+        return pessoaRepository.findByNomeContaining(nome, page);
     }
 
     @Transactional(readOnly = true)
