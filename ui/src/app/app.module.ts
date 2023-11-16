@@ -1,25 +1,25 @@
+import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from "@angular/core";
 
-import { InputTextModule } from "primeng/components/inputtext/inputtext";
 import { ButtonModule } from "primeng/components/button/button";
-import { DataTableModule } from "primeng/components/datatable/datatable";
-import { TooltipModule } from "primeng/components/tooltip/tooltip";
-import { InputTextareaModule } from "primeng/components/inputtextarea/inputtextarea";
 import { CalendarModule } from "primeng/components/calendar/calendar";
-import { SelectButtonModule } from "primeng/components/selectbutton/selectbutton";
+import { DataTableModule } from "primeng/components/datatable/datatable";
 import { DropdownModule } from "primeng/components/dropdown/dropdown";
+import { InputTextModule } from "primeng/components/inputtext/inputtext";
+import { InputTextareaModule } from "primeng/components/inputtextarea/inputtextarea";
+import { SelectButtonModule } from "primeng/components/selectbutton/selectbutton";
+import { TooltipModule } from "primeng/components/tooltip/tooltip";
 
 import { CurrencyMaskModule } from "ng2-currency-mask";
 
+import { FormsModule } from "@angular/forms";
 import { AppComponent } from "./app.component";
+import { LancamentoCadastroComponent } from "./lancamento-cadastro/lancamento-cadastro.component";
 import { LancamentosPesquisaComponent } from "./lancamentos-pesquisa/lancamentos-pesquisa.component";
 import { NavbarComponent } from "./navbar/navbar.component";
+import { PessoaCadastroComponent } from "./pessoa-cadastro/pessoa-cadastro.component";
 import { PessoasPesquisaComponent } from "./pessoas-pesquisa/pessoas-pesquisa.component";
-import { LancamentoCadastroComponent } from "./lancamento-cadastro/lancamento-cadastro.component";
-import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
-import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
