@@ -10,6 +10,7 @@ import { InputTextModule } from "primeng/components/inputtext/inputtext";
 import { InputTextareaModule } from "primeng/components/inputtextarea/inputtextarea";
 import { SelectButtonModule } from "primeng/components/selectbutton/selectbutton";
 import { TooltipModule } from "primeng/components/tooltip/tooltip";
+import { InputMaskModule } from "primeng/components/inputmask/inputmask";
 
 import { CurrencyMaskModule } from "ng2-currency-mask";
 
@@ -42,6 +43,7 @@ import { PessoasPesquisaComponent } from "./pessoas-pesquisa/pessoas-pesquisa.co
     CalendarModule,
     SelectButtonModule,
     DropdownModule,
+    InputMaskModule,
     CurrencyMaskModule,
   ],
   providers: [],
