@@ -3,6 +3,7 @@ package br.com.ferrymoney.api.resource;
 import br.com.ferrymoney.api.model.Pessoa;
 import br.com.ferrymoney.api.model.dto.PessoaDto;
 import br.com.ferrymoney.api.service.PessoaService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,7 @@ public class PessoaResource {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_USER') and #oauth2.hasScope('read')")
-    public ResponseEntity<Pessoa> findByNome(@RequestParam(required = false, defaultValue = "%") String nome, Pageable page) {
+    public ResponseEntity<Page<Pessoa>> findByNome(@RequestParam(required = false, defaultValue = "%") String nome, Pageable page) {
         return ResponseEntity.ok().body(pessoaService.findByNome(nome, page));
     }
 

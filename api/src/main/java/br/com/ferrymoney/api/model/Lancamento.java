@@ -12,11 +12,8 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Getter
-@Setter
-@Entity
 @Table(name = "lancamento")
+@Builder @Getter @Setter @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Lancamento {
 
@@ -41,10 +38,10 @@ public class Lancamento {
     @Enumerated(EnumType.STRING)
     TipoLancamento tipo;
 
-    @ManyToOne
+    @NotNull @ManyToOne
     Categoria categoria;
 
-    @ManyToOne
+    @NotNull @ManyToOne
     Pessoa pessoa;
 
     public static Lancamento toEntity(LancamentoDto lancamentoDto) {

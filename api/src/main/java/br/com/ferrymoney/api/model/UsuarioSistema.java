@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
-@Builder @Getter
+@Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UsuarioSistema extends User {
     private final Usuario usuario;

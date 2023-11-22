@@ -19,8 +19,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMessage;
 
 @ControllerAdvice
@@ -34,7 +37,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return handleExceptionInternal(ex, List.of(new Erro(messageSource.getMessage("mensagem.invalida", null,
+        return handleExceptionInternal(ex, singletonList(new Erro(messageSource.getMessage("mensagem.invalida", null,
                 LocaleContextHolder.getLocale()), ex.getCause() != null ? ex.getCause().toString() : ex.toString())),
                 headers, HttpStatus.BAD_REQUEST, request);
     }
@@ -48,21 +51,21 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ EmptyResultDataAccessException.class })
     public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request) {
-        List<Erro> erros = List.of(new Erro(messageSource.getMessage("recurso.nao-encontrado", null,
+        List<Erro> erros = singletonList(new Erro(messageSource.getMessage("recurso.nao-encontrado", null,
                 LocaleContextHolder.getLocale()), getRootCauseMessage(ex)));
         return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler({ PessoaInexistenteOuInativaException.class })
     public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex, WebRequest request) {
-        List<Erro> erros = List.of(new Erro(messageSource.getMessage("pessoa.inexistente-ou-inativa", null,
+        List<Erro> erros = singletonList(new Erro(messageSource.getMessage("pessoa.inexistente-ou-inativa", null,
                 LocaleContextHolder.getLocale()), getRootCauseMessage(ex)));
         return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({ DataIntegrityViolationException.class })
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
-        List<Erro> erros = List.of(new Erro(messageSource.getMessage("recurso.operacao-nao-permitida", null,
+        List<Erro> erros = singletonList(new Erro(messageSource.getMessage("recurso.operacao-nao-permitida", null,
                 LocaleContextHolder.getLocale()), getRootCauseMessage(ex)));
         return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
