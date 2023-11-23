@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("api")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AppProperties {
-    String origemPermitida = "http://localhost:8080";
+    String origemPermitida = "http://localhost:4200";
     Seguranca seguranca = new Seguranca();
 
     @Builder @Getter
