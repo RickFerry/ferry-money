@@ -5,9 +5,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpModule } from "@angular/http";
 import { AppComponent } from "./app.component";
 import { CoreModule } from "./core/core.module";
-import { LancamentosModule } from "./lancamentos/lancamentos.module";
-import { PessoasModule } from "./pessoas/pessoas.module";
 import { LancamentoService } from "./lancamentos/lancamento.service";
+import { LancamentosModule } from "./lancamentos/lancamentos.module";
+import { PessoaService } from "./pessoas/pessoa.service";
+import { PessoasModule } from "./pessoas/pessoas.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,7 @@ import { LancamentoService } from "./lancamentos/lancamento.service";
     LancamentosModule,
     PessoasModule,
   ],
-  providers: [LancamentoService],
+  providers: [LancamentoService, PessoaService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
