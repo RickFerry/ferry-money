@@ -33,6 +33,7 @@
         [lazy]="true"
         [totalRecords]="totalRegistros"
         (onLazyLoad)="aoMudarPagina($event)"
+        #tabela
       >
         <p-column field="nome" header="Nome"></p-column>
         <p-column field="endereco.cidade" header="Cidade"></p-column>
@@ -49,7 +50,7 @@
           </ng-template>
         </p-column>
         <p-column styleClass="col-acoes">
-          <ng-template pTemplate="body">
+          <ng-template let-pes="rowData" pTemplate="body">
             <a
               pButton
               icon="fa-pencil"
@@ -61,6 +62,7 @@
               icon="fa-trash"
               pTooltip="Excluir"
               tooltipPosition="top"
+              (click)="confirmarExclusao(pes)"
             ></button>
           </ng-template>
         </p-column>
