@@ -50,6 +50,20 @@ export class PessoasPesquisaComponent {
       .catch((erro) => this.handler.handle(erro));
   }
 
+  alternarStatus(pessoa: any): void {
+    const novoStatus = !pessoa.ativo;
+
+    this.pessoaService
+      .mudarStatus(pessoa.id, novoStatus)
+      .then(() => {
+        const acao = novoStatus ? "ativada" : "desativada";
+
+        pessoa.ativo = novoStatus;
+        this.toasty.success(`Pessoa ${acao} com sucesso!`);
+      })
+      .catch((erro) => this.handler.handle(erro));
+  }
+
   confirmarExclusao(pessoa: any) {
     this.confirmation.confirm({
       message: "Tem certeza que deseja excluir?",

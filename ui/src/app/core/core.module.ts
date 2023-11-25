@@ -8,6 +8,7 @@ import { ConfirmationService } from "primeng/components/common/confirmationservi
 import { ConfirmDialogModule } from "primeng/components/confirmdialog/confirmdialog";
 import { ErrorHandlerService } from "./error-handler.service";
 import { NavbarComponent } from "./navbar/navbar.component";
+import { CategoriaService } from "app/categorias/categoria.service";
 
 @NgModule({
   imports: [CommonModule, ToastyModule.forRoot(), ConfirmDialogModule],
@@ -18,6 +19,7 @@ import { NavbarComponent } from "./navbar/navbar.component";
     LancamentoService,
     PessoaService,
     ConfirmationService,
+    CategoriaService,
     { provide: LOCALE_ID, useValue: "pt-BR" },
   ],
 })
