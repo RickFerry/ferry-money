@@ -2,6 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import { LazyLoadEvent } from "primeng/components/common/lazyloadevent";
 import { LancamentoFiltro, LancamentoService } from "../lancamento.service";
 import { ToastyService } from "ng2-toasty";
+import { ConfirmationService } from "primeng/components/common/confirmationservice";
 
 @Component({
   selector: "app-lancamentos-pesquisa",
@@ -14,7 +15,11 @@ export class LancamentosPesquisaComponent {
   lancamentos = [];
   @ViewChild("tabela") tabela;
 
-  constructor(private service: LancamentoService, private toasty: ToastyService) {}
+  constructor(
+    private service: LancamentoService,
+    private toasty: ToastyService,
+    private confirmation: ConfirmationService
+  ) {}
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
@@ -28,6 +33,15 @@ export class LancamentosPesquisaComponent {
   aoMudarPagina(event: LazyLoadEvent) {
     const pagina = event.first / event.rows;
     this.pesquisar(pagina);
+  }
+
+  confirmarExclusao(lancamento: any) {
+    this.confirmation.confirm({
+      message: "Deseja realmente excluir este lançamento?",
+      accept: () => {
+        this.excluir(lancamento);
+      },
+    });
   }
 
   excluir(lancamento: any) {
