@@ -8,6 +8,7 @@ import br.com.ferrymoney.api.model.dto.ResumoLancamentoDto;
 import br.com.ferrymoney.api.repository.LancamentoRepository;
 import br.com.ferrymoney.api.repository.PessoaRepository;
 import br.com.ferrymoney.api.repository.filter.LancamentoFilter;
+import javassist.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,14 @@ public class LacamentoService {
         }
         copyProperties(lancamento, lanc, "id");
         return lancamentoRepository.save(lanc);
+    }
+
+    @Transactional
+    public void remover(Long id) throws NotFoundException {
+        if (lancamentoRepository.findOne(id) == null) {
+            throw new NotFoundException("Not found!");
+        }
+        lancamentoRepository.delete(id);
     }
 
     private void validarPessoa(Lancamento lancamento) {

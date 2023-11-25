@@ -22,13 +22,13 @@ public class CategoriaResource {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_USER') and #oauth2.hasScope('read')")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
     public ResponseEntity<List<Categoria>> findAll() {
         return ResponseEntity.ok(categoriaService.findAll());
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_USER') and #oauth2.hasScope('read')")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
     public ResponseEntity<CategoriaDto> findById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(categoriaService.findById(id));
@@ -38,7 +38,7 @@ public class CategoriaResource {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') and #oauth2.hasScope('write')")
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_CATEGORIA') and #oauth2.hasScope('write')")
     public ResponseEntity<CategoriaDto> create(@Valid @RequestBody CategoriaDto dto,
                                                UriComponentsBuilder uriComponentsBuilder) {
         try {
