@@ -1,7 +1,11 @@
 import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { CategoriaService } from "app/categorias/categoria.service";
 import { ErrorHandlerService } from "app/core/error-handler.service";
+import { Lancamento } from "app/core/model";
 import { PessoaService } from "app/pessoas/pessoa.service";
+import { ToastyService } from "ng2-toasty";
+import { LancamentoService } from "../lancamento.service";
 
 @Component({
   selector: "app-lancamento-cadastro",
@@ -11,6 +15,7 @@ import { PessoaService } from "app/pessoas/pessoa.service";
 export class LancamentoCadastroComponent implements OnInit {
   categorias = [];
   pessoas = [];
+  lancamento = new Lancamento();
   tipos = [
     { label: "Receita", value: "RECEITA" },
     { label: "Despesa", value: "DESPESA" },
@@ -19,12 +24,26 @@ export class LancamentoCadastroComponent implements OnInit {
   constructor(
     private categoriaService: CategoriaService,
     private pessoaService: PessoaService,
+    private lancamentoService: LancamentoService,
+    private toasty: ToastyService,
     private handler: ErrorHandlerService
   ) {}
 
   ngOnInit() {
     this.carregarCategorias();
     this.carregarPessoas();
+  }
+
+  salvar(form: FormControl) {
+    this.lancamentoService
+      .adicionar(this.lancamento)
+      .then(() => {
+        this.toasty.success("Lançamento adicionado com sucesso!");
+
+        form.reset();
+        this.lancamento = new Lancamento();
+      })
+      .catch((erro) => this.handler.handle(erro));
   }
 
   carregarCategorias() {

@@ -1,5 +1,5 @@
 <div class="container">
-  <form #f="ngForm" autocomplete="off">
+  <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
     <div class="ui-g">
       <div class="ui-g-12">
         <h1>Novo Lançamento</h1>
@@ -9,7 +9,7 @@
         <p-selectButton
           name="tipo"
           [options]="tipos"
-          ngModel
+          [(ngModel)]="lancamento.tipo"
           #tipo
         ></p-selectButton>
       </div>
@@ -22,7 +22,7 @@
           [inline]="false"
           [readonlyInput]="false"
           [showIcon]="false"
-          ngModel
+          [(ngModel)]="lancamento.dataVencimento"
           #vencimento="ngModel"
           required
         ></p-calendar>
@@ -38,7 +38,11 @@
         <label>{{
           tipo.value === "RECEITA" ? "Recebimento" : "Pagamento"
         }}</label>
-        <p-calendar dateFormat="dd/mm/yy"></p-calendar>
+        <p-calendar
+          dateFormat="dd/mm/yy"
+          name="dataPagamento"
+          [(ngModel)]="lancamento.dataPagamento"
+        ></p-calendar>
       </div>
 
       <div class="ui-g-12 ui-md-9 ui-fluid">
@@ -47,7 +51,7 @@
           pInputText
           type="text"
           name="descricao"
-          ngModel
+          [(ngModel)]="lancamento.descricao"
           #descricao="ngModel"
           required
           minlength="5"
@@ -81,7 +85,7 @@
             decimal: ',',
             allowNegative: false
           }"
-          ngModel
+          [(ngModel)]="lancamento.valor"
           required
         />
       </div>
@@ -93,7 +97,7 @@
           [options]="categorias"
           placeholder="Selecione"
           [autoWidth]="false"
-          ngModel
+          [(ngModel)]="lancamento.categoria.id"
           required
         ></p-dropdown>
       </div>
@@ -106,14 +110,19 @@
           placeholder="Selecione"
           [autoWidth]="false"
           [filter]="true"
-          ngModel
+          [(ngModel)]="lancamento.pessoa.id"
           required
         ></p-dropdown>
       </div>
 
       <div class="ui-g-12 ui-fluid">
         <label>Observação</label>
-        <textarea pInputTextarea rows="3"></textarea>
+        <textarea
+          pInputTextarea
+          rows="3"
+          name="observacao"
+          [(ngModel)]="lancamento.observacao"
+        ></textarea>
       </div>
 
       <div class="ui-g-12">
