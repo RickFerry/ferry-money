@@ -74,6 +74,7 @@
               icon="fa-pencil"
               pTooltip="Editar"
               tooltipPosition="top"
+              [routerLink]="['/lancamentos', lanc.id]"
             ></a>
             <button
               pButton
@@ -87,7 +88,7 @@
       </p-dataTable>
     </div>
     <div class="ui-g-12">
-      <a pButton label="Novo Lançamento"></a>
+      <a pButton label="Novo Lançamento" routerLink="/lancamentos/novo"></a>
     </div>
   </div>
 </div>
