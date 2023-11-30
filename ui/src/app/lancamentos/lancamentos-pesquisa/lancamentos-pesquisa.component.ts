@@ -1,16 +1,17 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ErrorHandlerService } from "app/core/error-handler.service";
 import { ToastyService } from "ng2-toasty";
 import { ConfirmationService } from "primeng/components/common/confirmationservice";
 import { LazyLoadEvent } from "primeng/components/common/lazyloadevent";
 import { LancamentoFiltro, LancamentoService } from "../lancamento.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "app-lancamentos-pesquisa",
   templateUrl: "./lancamentos-pesquisa.component.html",
   styleUrls: ["./lancamentos-pesquisa.component.css"],
 })
-export class LancamentosPesquisaComponent {
+export class LancamentosPesquisaComponent implements OnInit {
   totalRegistros = 0;
   filtro = new LancamentoFiltro();
   lancamentos = [];
@@ -20,8 +21,13 @@ export class LancamentosPesquisaComponent {
     private service: LancamentoService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
-    private handler: ErrorHandlerService
+    private handler: ErrorHandlerService,
+    private title: Title
   ) {}
+
+  ngOnInit(): void {
+    this.title.setTitle("Pesquisa de lançamentos");
+  }
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
