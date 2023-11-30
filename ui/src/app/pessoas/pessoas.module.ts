@@ -24,6 +24,6 @@ import { SharedModule } from "app/shared/shared.module";
     InputMaskModule,
   ],
   declarations: [PessoaCadastroComponent, PessoasPesquisaComponent],
-  exports: [PessoaCadastroComponent, PessoasPesquisaComponent],
+  exports: [],
 })
 export class PessoasModule {}

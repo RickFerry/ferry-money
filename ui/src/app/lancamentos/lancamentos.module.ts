@@ -34,6 +34,6 @@ import { LancamentosPesquisaComponent } from "./lancamentos-pesquisa/lancamentos
     CurrencyMaskModule,
   ],
   declarations: [LancamentoCadastroComponent, LancamentosPesquisaComponent],
-  exports: [LancamentoCadastroComponent, LancamentosPesquisaComponent],
+  exports: [],
 })
 export class LancamentosModule {}
