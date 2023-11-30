@@ -7,13 +7,7 @@
 
       <div class="ui-g-12 ui-fluid">
         <label>Nome</label>
-        <input
-          pInputText
-          type="text"
-          name="nome"
-          [(ngModel)]="filtro.nome"
-          placeholder="Pesquise por nome"
-        />
+        <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome" />
       </div>
 
       <div class="ui-g-12">
@@ -57,6 +51,7 @@
               icon="fa-pencil"
               pTooltip="Editar"
               tooltipPosition="top"
+              [routerLink]="['/pessoas', pes.id]"
             ></a>
             <button
               pButton
@@ -71,7 +66,7 @@
     </div>
 
     <div class="ui-g-12">
-      <a pButton label="Nova Pessoa"></a>
+      <a pButton label="Nova Pessoa" routerLink="/pessoas/nova"></a>
     </div>
   </div>
 </div>
